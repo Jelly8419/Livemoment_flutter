@@ -1,0 +1,78 @@
+import '../models/building.dart';
+
+class DummyBuildings {
+  static List<Building> buildings = [
+    Building(
+      id: 1,
+      name: '서울시청',
+      address: '서울특별시 중구 세종대로 110',
+      latitude: 37.5666805,
+      longitude: 126.9784147,
+      type: '공공기관',
+      description: '서울특별시의 행정 중심지입니다.',
+    ),
+    Building(
+      id: 2,
+      name: '롯데월드타워',
+      address: '서울특별시 송파구 올림픽로 300',
+      latitude: 37.5125998,
+      longitude: 127.1025328,
+      type: '상업시설',
+      description: '대한민국에서 가장 높은 마천루입니다.',
+    ),
+    Building(
+      id: 3,
+      name: '코엑스',
+      address: '서울특별시 강남구 영동대로 513',
+      latitude: 37.5115557,
+      longitude: 127.0595261,
+      type: '컨벤션센터',
+      description: '대한민국 최대 규모의 컨벤션센터입니다.',
+    ),
+    Building(
+      id: 4,
+      name: '63빌딩',
+      address: '서울특별시 영등포구 여의도동 60',
+      latitude: 37.5197717,
+      longitude: 126.9365607,
+      type: '상업시설',
+      description: '한강변에 위치한 대표적인 마천루입니다.',
+    ),
+    Building(
+      id: 5,
+      name: '동대문디자인플라자',
+      address: '서울특별시 중구 을지로 281',
+      latitude: 37.5666374,
+      longitude: 127.0093195,
+      type: '문화시설',
+      description: '독특한 건축 디자인으로 유명한 복합문화공간입니다.',
+    ),
+    Building(
+      id: 6,
+      name: '국립중앙박물관',
+      address: '서울특별시 용산구 서빙고로 137',
+      latitude: 37.5240886,
+      longitude: 126.9803624,
+      type: '박물관',
+      description: '대한민국의 대표 국립박물관입니다.',
+    ),
+    Building(
+      id: 7,
+      name: '명동성당',
+      address: '서울특별시 중구 명동길 74',
+      latitude: 37.5636893,
+      longitude: 126.9867007,
+      type: '종교시설',
+      description: '대한민국 천주교의 중심 성당입니다.',
+    ),
+    Building(
+      id: 8,
+      name: '한강공원 반포지구',
+      address: '서울특별시 서초구 신반포로 11',
+      latitude: 37.5109895,
+      longitude: 126.9966983,
+      type: '공원',
+      description: '무지개분수로 유명한 한강공원입니다.',
+    ),
+  ];
+}
