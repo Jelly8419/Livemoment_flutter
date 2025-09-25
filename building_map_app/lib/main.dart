@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'models/building.dart';
 import 'data/dummy_buildings.dart';
 import 'config/api_config.dart';
+import 'pages/room_registration_page.dart';
 
 /// 앱의 진입점
 void main() {
+  // WebView 플랫폼 초기화
+  WidgetsFlutterBinding.ensureInitialized();
+
   // API 키 유효성 검사
   if (!ApiConfig.isApiKeyValid()) {
     debugPrint('경고: Google Maps API 키가 설정되지 않았거나 유효하지 않습니다.');
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Building Map App',
+      title: 'Now Stay',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -102,6 +107,45 @@ class HomeScreen extends StatelessWidget {
                       Text(
                         '매물 검색',
                         style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // 호스트 전용 방 등록 버튼
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: OutlinedButton(
+                  onPressed: () {
+                    // 방 등록 화면으로 이동
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RoomRegistrationPage(),
+                      ),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: Theme.of(context).primaryColor),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add_home, color: Theme.of(context).primaryColor),
+                      const SizedBox(width: 8),
+                      Text(
+                        '방 등록하기 (호스트 전용)',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ],
                   ),
