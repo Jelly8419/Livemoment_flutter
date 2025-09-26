@@ -47,13 +47,17 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('방 등록하기'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('숙소 등록하기'),
+        backgroundColor: const Color(0xFF4A90E2),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
       ),
+      backgroundColor: Colors.grey[50],
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -76,21 +80,40 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
               const SizedBox(height: 32),
 
               // 등록 버튼
-              SizedBox(
+              Container(
                 width: double.infinity,
-                height: 56,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF4A90E2), Color(0xFF357ABD)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF4A90E2).withOpacity(0.3),
+                      offset: const Offset(0, 4),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: const Text(
-                    '방 등록하기',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    '숙소 등록하기',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -104,36 +127,63 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black87,
-        ),
+      child: Row(
+        children: [
+          Container(
+            width: 4,
+            height: 24,
+            decoration: BoxDecoration(
+              color: const Color(0xFF4A90E2),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF2C3E50),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildBasicInfoSection() {
     return Card(
-      elevation: 2,
+      elevation: 0,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey[200]!, width: 1),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            // 방 이름
+            // 숙소 이름
             TextFormField(
               controller: _roomNameController,
-              decoration: const InputDecoration(
-                labelText: '방 이름',
+              decoration: InputDecoration(
+                labelText: '숙소 이름',
                 hintText: '예: 강남역 근처 깨끗한 원룸',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.home),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                ),
+                prefixIcon: const Icon(Icons.home_outlined, color: Color(0xFF4A90E2)),
+                filled: true,
+                fillColor: Colors.grey[50],
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return '방 이름을 입력해주세요';
+                  return '숙소 이름을 입력해주세요';
                 }
                 return null;
               },
@@ -149,12 +199,28 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
               decoration: InputDecoration(
                 labelText: '주소',
                 hintText: '주소 검색 버튼을 눌러주세요',
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.location_on),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: _openAddressSearch,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                ),
+                prefixIcon: const Icon(Icons.location_on, color: Color(0xFF4A90E2)),
+                suffixIcon: Container(
+                  margin: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF4A90E2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.search, color: Colors.white),
+                    onPressed: _openAddressSearch,
+                  ),
+                ),
+                filled: true,
+                fillColor: Colors.grey[50],
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -169,11 +235,20 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
             // 상세 주소
             TextFormField(
               controller: _detailAddressController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: '상세 주소',
                 hintText: '예: 101동 501호, 3층 등',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.location_city),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                ),
+                prefixIcon: const Icon(Icons.location_city, color: Color(0xFF4A90E2)),
+                filled: true,
+                fillColor: Colors.grey[50],
               ),
               validator: (value) {
                 // 상세 주소는 선택사항이므로 유효성 검사 없음
@@ -187,12 +262,21 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
             TextFormField(
               controller: _areaController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: '전용면적 (평)',
                 hintText: '예: 10',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.square_foot),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                ),
+                prefixIcon: const Icon(Icons.square_foot, color: Color(0xFF4A90E2)),
                 suffixText: '평',
+                filled: true,
+                fillColor: Colors.grey[50],
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -213,18 +297,32 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
 
   Widget _buildBuildingInfoSection() {
     return Card(
-      elevation: 2,
+      elevation: 0,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey[200]!, width: 1),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
             // 건물유형
             DropdownButtonFormField<String>(
               value: _buildingType,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: '건물유형',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.apartment),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                ),
+                prefixIcon: const Icon(Icons.apartment, color: Color(0xFF4A90E2)),
+                filled: true,
+                fillColor: Colors.grey[50],
               ),
               items: ['오피스텔', '아파트', '단독주택', '기타']
                   .map((type) => DropdownMenuItem(
@@ -247,10 +345,19 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: _parkingAvailable,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '주차여부',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.local_parking),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.local_parking, color: Color(0xFF4A90E2)),
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     items: ['유', '무']
                         .map((option) => DropdownMenuItem(
@@ -272,10 +379,19 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: _elevatorAvailable,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '엘리베이터',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.elevator),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.elevator, color: Color(0xFF4A90E2)),
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     items: ['유', '무']
                         .map((option) => DropdownMenuItem(
@@ -300,9 +416,14 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
 
   Widget _buildStructureInfoSection() {
     return Card(
-      elevation: 2,
+      elevation: 0,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey[200]!, width: 1),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
             Row(
@@ -312,11 +433,20 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                   child: TextFormField(
                     controller: _roomCountController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '방 수',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.bed),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.bed, color: Color(0xFF4A90E2)),
                       suffixText: '개',
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -338,11 +468,20 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                   child: TextFormField(
                     controller: _bathroomCountController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '화장실 수',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.wc),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.wc, color: Color(0xFF4A90E2)),
                       suffixText: '개',
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -368,11 +507,20 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                   child: TextFormField(
                     controller: _livingRoomCountController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '거실 수',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.weekend),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.weekend, color: Color(0xFF4A90E2)),
                       suffixText: '개',
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -394,11 +542,20 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
                   child: TextFormField(
                     controller: _kitchenCountController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '주방 수',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.kitchen),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 2),
+                      ),
+                      prefixIcon: const Icon(Icons.kitchen, color: Color(0xFF4A90E2)),
                       suffixText: '개',
+                      filled: true,
+                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -418,17 +575,35 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
             const SizedBox(height: 16),
 
             // 복층 여부
-            CheckboxListTile(
-              title: const Text('복층 여부'),
-              subtitle: const Text('복층 구조인 경우 체크해주세요'),
-              value: _isDuplex,
-              onChanged: (value) {
-                setState(() {
-                  _isDuplex = value ?? false;
-                });
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-              activeColor: Theme.of(context).primaryColor,
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]!),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: CheckboxListTile(
+                title: const Text(
+                  '복층 여부',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF2C3E50),
+                  ),
+                ),
+                subtitle: const Text(
+                  '복층 구조인 경우 체크해주세요',
+                  style: TextStyle(color: Color(0xFF6C7B7F)),
+                ),
+                value: _isDuplex,
+                onChanged: (value) {
+                  setState(() {
+                    _isDuplex = value ?? false;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+                activeColor: const Color(0xFF4A90E2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
           ],
         ),
@@ -484,7 +659,7 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
       // 폼 데이터 수집
       final roomData = {
         'roomName': _roomNameController.text,
-        'address': _addressController.text,
+        'address': _addressController.text, 
         'detailAddress': _detailAddressController.text,
         'area': double.parse(_areaController.text),
         'buildingType': _buildingType,
@@ -494,7 +669,7 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
         'bathroomCount': int.parse(_bathroomCountController.text),
         'livingRoomCount': int.parse(_livingRoomCountController.text),
         'kitchenCount': int.parse(_kitchenCountController.text),
-        'isDuplex': _isDuplex,
+        'isDuplex': _isDuplex, //복층 여부
       };
 
       // TODO: 서버로 데이터 전송
@@ -502,9 +677,16 @@ class _RoomRegistrationPageState extends State<RoomRegistrationPage> {
 
       // 성공 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('방이 성공적으로 등록되었습니다!'),
-          backgroundColor: Colors.green,
+        SnackBar(
+          content: const Text(
+            '숙소가 성공적으로 등록되었습니다! 🎉',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          backgroundColor: const Color(0xFF4A90E2),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       );
 
